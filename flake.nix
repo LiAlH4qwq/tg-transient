@@ -5,9 +5,13 @@
       { config, withSystem, ... }: {
         systems = import inputs.systems;
         flake.overlays = {
-          tg-transient = prev: {
-            tg-transient = withSystem prev.stdenv.system ({ config, ... }: config.packages.tg-transient);
-          };
+          tg-transient =
+            final: prev:
+            withSystem prev.stdenv.hostPlatform.system (
+              { config, ... }: {
+                tg-transient = config.packages.tg-transient;
+              }
+            );
           default = config.flake.overlays.tg-transient;
         };
         perSystem =
