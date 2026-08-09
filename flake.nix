@@ -1,22 +1,30 @@
 {
   outputs =
     inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = import inputs.systems;
-      perSystem =
-        {
-          config,
-          inputs',
-          pkgs,
-          ...
-        }:
-        {
-          packages = {
-            tg-transient = pkgs.callPackage ./package.nix { inherit (inputs'.bun2nix.packages) bun2nix; };
-            default = config.packages.tg-transient;
+    flake-parts.lib.mkFlake { inherit inputs; } (
+      { config, withSystem, ... }: {
+        systems = import inputs.systems;
+        flake.overlays = {
+          tg-transient = prev: {
+            tg-transient = withSystem prev.stdenv.system ({ config, ... }: config.packages.tg-transient);
           };
+          default = config.overlays.tg-transient;
         };
-    };
+        perSystem =
+          {
+            config,
+            inputs',
+            pkgs,
+            ...
+          }:
+          {
+            packages = {
+              tg-transient = pkgs.callPackage ./package.nix { inherit (inputs'.bun2nix.packages) bun2nix; };
+              default = config.packages.tg-transient;
+            };
+          };
+      }
+    );
   nixConfig = {
     extra-experimental-features = [
       "flakes"
