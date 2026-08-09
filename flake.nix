@@ -8,7 +8,7 @@
           tg-transient = prev: {
             tg-transient = withSystem prev.stdenv.system ({ config, ... }: config.packages.tg-transient);
           };
-          default = config.overlays.tg-transient;
+          default = config.flake.overlays.tg-transient;
         };
         perSystem =
           {
