@@ -2,7 +2,12 @@
   outputs =
     inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } (
-      { config, withSystem, ... }: {
+      {
+        config,
+        withSystem,
+        ...
+      }:
+      {
         systems = import inputs.systems;
         flake.overlays = {
           tg-transient =
@@ -26,7 +31,9 @@
               tg-transient = pkgs.callPackage ./package.nix { inherit (inputs'.bun2nix.packages) bun2nix; };
               default = config.packages.tg-transient;
             };
+            treefmt.programs.nixfmt.enable = true;
           };
+        imports = [ inputs.treefmt-nix.flakeModule ];
       }
     );
   nixConfig = {
