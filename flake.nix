@@ -28,7 +28,10 @@
           }:
           {
             packages = {
-              tg-transient = pkgs.callPackage ./package.nix { inherit (inputs'.bun2nix.packages) bun2nix; };
+              tg-transient = pkgs.callPackage ./package.nix {
+                inherit config;
+                inherit (inputs'.bun2nix.packages) bun2nix;
+              };
               default = config.packages.tg-transient;
             };
             treefmt.programs.nixfmt.enable = true;
