@@ -30,7 +30,6 @@
             packages = {
               tg-transient = pkgs.callPackage ./package.nix {
                 inherit config;
-                inherit (inputs'.bun2nix.packages) bun2nix;
               };
               default = config.packages.tg-transient;
             };
@@ -63,15 +62,6 @@
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    bun2nix = {
-      url = "github:nix-community/bun2nix/2.1.2";
-      inputs = {
-        systems.follows = "systems";
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
-        treefmt-nix.follows = "treefmt-nix";
-      };
     };
   };
 }

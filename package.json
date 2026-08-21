@@ -15,28 +15,28 @@
     "bugs": "https://github.com/lialh4qwq/tg-transient/issues",
     "main": "src/index.ts",
     "module": "src/index.ts",
-    "engines": {
-        "bun": ">1.0.0"
-    },
     "files": [
         "src/**/*",
         "tsconfig.json"
     ],
-    "devDependencies": {
-        "@biomejs/biome": "^2.5.7",
-        "@types/bun": "latest",
-        "@types/node": "^26.2.0",
-        "bun2nix": "^2.1.2"
+    "scripts": {
+        "build": "rolldown -c",
+        "check": "pnpm run check:type && pnpm run check:format && pnpm run check:lint",
+        "check:type": "tsc",
+        "check:format": "biome check --write --linter-enabled=false",
+        "check:lint": "biome lint --write"
     },
     "peerDependencies": {
         "typescript": "^7.0.2"
     },
-    "scripts": {
-        "postinstall": "bun2nix -o bun.nix"
+    "devDependencies": {
+        "@biomejs/biome": "^2.5.9",
+        "@types/node": "^26.2.0",
+        "rolldown": "^1.2.5"
     },
     "dependencies": {
-        "@effect/platform-bun": "^4.0.0-beta.107",
-        "effect": "^4.0.0-beta.107",
+        "@effect/platform-node": "4.0.0-beta.107",
+        "effect": "4.0.0-rc.111",
         "grammy": "^1.45.1"
     }
 }

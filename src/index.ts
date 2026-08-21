@@ -1,4 +1,4 @@
-import { BunRuntime, BunServices } from "@effect/platform-bun"
+import { NodeRuntime, NodeServices } from "@effect/platform-node"
 import { Data, Effect } from "effect"
 import { Argument, Command, Flag } from "effect/unstable/cli"
 import { Bot } from "grammy"
@@ -43,6 +43,6 @@ const cmd = Command.make("tg-transient", {
 
 cmd.pipe(
     Command.run({ version: "0.1.0" }),
-    Effect.provide(BunServices.layer),
-    BunRuntime.runMain,
+    Effect.provide(NodeServices.layer),
+    NodeRuntime.runMain,
 )
