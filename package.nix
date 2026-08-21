@@ -48,6 +48,7 @@ stdenv.mkDerivation (
         mkdir -p "$out/bin" "$out/share/"${pnameShArg}
         cp 'dist/index.js' "$out/share/"${pnameShArg}'/index.js'
         makeWrapper ${nodejs |> lib.getExe |> lib.escapeShellArg} "$out/bin/"${pnameShArg} \
+          --add-flags '--no-warnings' \
           --add-flags '--' \
           --add-flags "$out/share/"${pnameShArg}'/index.js'
 
